@@ -1,0 +1,145 @@
+#include <GL/glut.h>
+#include <cmath>
+
+// Function to plot a point
+void displayPoint(int x, int y) {
+    glVertex2i(x, y);
+}
+
+// Line drawing using Bresenham's algorithm
+void simpleLine(int x1, int y1, int x2, int y2) {
+    int dx = abs(x2 - x1);
+    int dy = abs(y2 - y1);
+    int x, y, p;
+    int xIncrement, yIncrement;
+
+
+    if (x2 > x1)
+        xIncrement = 1;
+    else
+        xIncrement = -1;
+
+
+    if (y2 > y1)
+        yIncrement = 1;
+    else
+        yIncrement = -1;
+
+    if (dx > dy) {
+        p = 2 * dy - dx;
+        x = x1;
+        y = y1;
+
+        glBegin(GL_POINTS);
+        while (x != x2) {
+            glVertex2i(x, y);
+            x += xIncrement;
+            if (p >= 0) {
+                y += yIncrement;
+                p += 2 * (dy - dx);
+            } else {
+                p += 2 * dy;
+            }
+        }
+        glEnd();
+    }
+    else {
+        p = 2 * dx - dy;
+        x = x1;
+        y = y1;
+
+        glBegin(GL_POINTS);
+        while (y != y2) {
+            glVertex2i(x, y);
+            y += yIncrement;
+            if (p >= 0) {
+                x += xIncrement;
+                p += 2 * (dx - dy);
+            } else {
+                p += 2 * dx;
+            }
+        }
+        glEnd();
+    }
+
+    glFlush();
+}
+// Circle drawing using Bresenham's algorithm
+void drawCircle(int xc, int yc, int r) {
+    glColor3f(0, 0, 0);
+    int x = 0, y = r;
+    int d = 3 - (2 * r);
+    while (x <= y) {
+        glBegin(GL_POINTS);
+        glVertex2i(xc + x, yc + y);
+        glVertex2i(xc - x, yc + y);
+        glVertex2i(xc + x, yc - y);
+        glVertex2i(xc - x, yc - y);
+        glVertex2i(xc + y, yc + x);
+        glVertex2i(xc - y, yc + x);
+        glVertex2i(xc + y, yc - x);
+        glVertex2i(xc - y, yc - x);
+        glEnd();
+        x++;
+        if (d > 0) {
+            y--;
+            d = d + 4 * (x - y) + 10;
+        } else {
+            d = d + 4 * x + 6;
+        }
+    }
+    glFlush();
+}
+
+// Drawing the house structure
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(0, 0, 0); // black
+
+    // House base rectangle
+    simpleLine(100, 100, 300, 100); // bottom
+    simpleLine(100, 100, 100, 250); // left
+    simpleLine(300, 100, 300, 250); // right
+    simpleLine(100, 250, 300, 250); // top
+    simpleLine(170, 100, 170, 250);
+
+    // Roof (triangle)
+    simpleLine(100, 250, 135, 350); // left slope
+    simpleLine(135, 350, 170, 250); // right slope
+
+    // Circle window
+    drawCircle(135, 300, 15); // center at (200,290), radius 20
+
+    // Door
+    simpleLine(115, 100, 115, 190); // left
+    simpleLine(155, 100, 155, 190); // right
+    simpleLine(115, 190, 155, 190); // top
+
+    //joing last line 2
+    simpleLine(135,350,300,350);
+    simpleLine(300,350,300,250);
+
+    glFlush();
+}
+
+// Initialization
+void init() {
+    glClearColor(1.0, 1.0, 1.0, 0.0); // white background
+    glColor3f(0.0, 0.0, 0.0); // draw in black
+    glPointSize(2.0);
+    glMatrixMode(GL_PROJECTION);
+    gluOrtho2D(0, 500, 0, 500); // set coordinate system
+}
+
+// Main function
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(600, 600);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("House using Bresenham's Line and Circle Algorithm");
+    init();
+    glutDisplayFunc(display);
+    glutMainLoop();
+    return 0;
+}
