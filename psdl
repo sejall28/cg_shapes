@@ -371,5 +371,109 @@ void main(void) {
         lcd_delay(9000);
     }
 }
+
+
+
+==Ardino Tinker Cad
+
+const int redPin = 12;
+const int yellowPin = 11;
+const int greenPin = 10;
+
+void setup() {
+  pinMode(redPin, OUTPUT);
+  pinMode(yellowPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(redPin, HIGH);
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(greenPin, LOW);
+  delay(500);
+
+  digitalWrite(redPin, LOW);
+  digitalWrite(yellowPin, HIGH);
+  digitalWrite(greenPin, LOW);
+  delay(200);
+
+  digitalWrite(redPin, LOW);
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(greenPin, HIGH);
+  delay(500);
+}
+
+
+
+==ASCENDING DESCENDING CODE(sorting):
+ //DESCENDING ORDER
+
+
+#include <xc.h>
+#include<stdlib.h>
+#include<pic18f4550.h>
+
+void main(void){
+ int i,j,temp;
+int arr[]={0x06,0x04,0x0A,0x02,0x08};
+
+for(i=0;i<4;i++){
+for(j=0;j<4-i,j++){
+if(arr[j]<arr[j+1])
+{
+temp=arr[j];
+arr[j]=arr[j+1];
+arr[j+1]=temp;
+}
+}
+}
+
+TRISB=0;
+
+for(int k=0;k<5;k++){
+  PORTB=arr[k];
+for(j=0;j<1000;j++){
+   for(i=0;i<600;i++){
+
+}
+  }
+    }
+
+return;
+}
+
+==ASCENDING ORDER
  
- 
+
+#include <xc.h>
+#include<stdlib.h>
+#include<pic18f4550.h>
+
+void main(void){
+ int i,j,temp;
+int arr[]={0x06,0x04,0x0A,0x02,0x08};
+
+for(i=0;i<4;i++){
+for(j=0;j<4-i,j++){
+if(arr[j]>arr[j+1])
+{
+temp=arr[j];
+arr[j]=arr[j+1];
+arr[j+1]=temp;
+}
+}
+}
+
+TRISB=0;
+
+for(int k=0;k<5;k++){
+  PORTB=arr[k];
+for(j=0;j<1000;j++){
+   for(i=0;i<600;i++){
+
+}
+  }
+    }
+
+return;
+}
