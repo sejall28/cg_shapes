@@ -1,0 +1,1407 @@
+LOOP CIRCLE:
+#include <GL/glut.h>
+#include <iostream>
+using namespace std;
+int centreX,centreY,radiusX,radiusY,radius;
+bool firstClick =false;
+bool drawCircle1=false;
+void drawCircle(int xc,int yc,int r){
+int x=0,y=r;
+int d=3-(2*r);
+
+while(x<=y){
+     glBegin(GL_POINTS);
+    glVertex2i(xc+x,yc+y);
+    glVertex2i(xc-x,yc+y);
+    glVertex2i(xc+x,yc-y);
+    glVertex2i(xc-x,yc-y);
+    glVertex2i(xc+y,yc+x);
+    glVertex2i(xc-y,yc+x);
+    glVertex2i(xc+y,yc-x);
+    glVertex2i(xc-y,yc-x);
+
+ glEnd();
+    x++;
+    if(d>0){
+        y--;
+        d=d+4*(x-y)+10;
+    }else{
+        d=d+4*x+6;
+        }
+}
+
+        glFlush();
+}
+void drawAxes() {
+    glColor3f(1.0, 1.0, 1.0); // Green color for axes
+    glBegin(GL_LINES);
+    glVertex2i(300, 0);   // Vertical line (X = 300)
+    glVertex2i(300, 600);
+    glVertex2i(0, 300);   // Horizontal line (Y = 300)
+    glVertex2i(600, 300);
+    glEnd();
+}
+void mouse(int button,int state,int x,int y){
+if(button==GLUT_LEFT_BUTTON &&state==GLUT_DOWN){
+    if(!firstClick){
+        centreX=x;
+        centreY=y;
+        firstClick=true;
+    }else{
+        radiusX=x;
+        radius=abs(radiusX-centreX);
+        glClear(GL_COLOR_BUFFER_BIT);
+drawCircle1=true;
+        firstClick=false;
+
+        glutPostRedisplay();
+        }
+}
+}
+void display(){
+
+    glClear(GL_COLOR_BUFFER_BIT);
+    drawAxes();
+    if(drawCircle1){
+    for (int i=0;i<5;i++) {
+                drawCircle(centreX, centreY, radius+i*20);
+            }
+        }
+    glFlush();
+}
+void init(){
+glClearColor(0.0,0.0,0.0,1.0);
+glMatrixMode(GL_PROJECTION);
+gluOrtho2D(0,600,600,0);
+}
+
+
+int main(int argc,char**argv){
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+    glutInitWindowSize(600,600);
+    glutCreateWindow("---------");
+    init();
+    glutDisplayFunc(display);
+    glutMouseFunc(mouse);
+    glutMainLoop();
+    return 0;
+    }
+CONCENTRIC FOUR CIRCLES:
+#include <GL/glut.h>
+#include <iostream>
+using namespace std;
+int centreX,centreY,radiusX,radiusY,radius;
+bool firstClick =false;
+void drawCircle(int xc,int yc,int r){
+int x=0,y=r;
+int d=3-(2*r);
+
+while(x<=y){
+     glBegin(GL_POINTS);
+    glVertex2i(xc+x,yc+y);
+    glVertex2i(xc-x,yc+y);
+    glVertex2i(xc+x,yc-y);
+    glVertex2i(xc-x,yc-y);
+    glVertex2i(xc+y,yc+x);
+    glVertex2i(xc-y,yc+x);
+    glVertex2i(xc+y,yc-x);
+    glVertex2i(xc-y,yc-x);
+
+ glEnd();
+    x++;
+    if(d>0){
+        y--;
+        d=d+4*(x-y)+10;
+    }else{
+        d=d+4*x+6;
+        }
+}
+
+        glFlush();
+}
+
+void mouse(int button,int state,int x,int y){
+if(button==GLUT_LEFT_BUTTON &&state==GLUT_DOWN){
+    if(!firstClick){
+        centreX=x;
+        centreY=y;
+        firstClick=true;
+    }else{
+        radiusX=x;
+        radius=abs(radiusX-centreX);
+        glClear(GL_COLOR_BUFFER_BIT);
+        //drawCircle(centreX,centreY,radius);
+        drawCircle(centreX+radius,centreY,radius);
+        drawCircle(centreX-radius,centreY,radius);
+        drawCircle(centreX,centreY+radius,radius);
+        drawCircle(centreX,centreY-radius,radius);
+        firstClick=false;
+        }
+}
+}
+void display(){
+
+    glClear(GL_COLOR_BUFFER_BIT);
+    glFlush();
+}
+void init(){
+glClearColor(0.0,0.0,0.0,1.0);
+glMatrixMode(GL_PROJECTION);
+gluOrtho2D(0,600,600,0);
+}
+
+
+int main(int argc,char**argv){
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+    glutInitWindowSize(600,600);
+    glutCreateWindow("---------");
+    init();
+    glutDisplayFunc(display);
+    glutMouseFunc(mouse);
+    glutMainLoop();
+    return 0;
+    }
+Flower shaped circle:
+#include <GL/glut.h>
+#include <iostream>
+#include <cmath>
+using namespace std;
+int centreX,centreY,radiusX,radiusY,radius;
+bool firstClick =false;
+void drawCircle(int xc,int yc,int r){
+int x=0,y=r;
+int d=3-(2*r);
+
+while(x<=y){
+     glBegin(GL_POINTS);
+    glVertex2i(xc+x,yc+y);
+    glVertex2i(xc-x,yc+y);
+    glVertex2i(xc+x,yc-y);
+    glVertex2i(xc-x,yc-y);
+    glVertex2i(xc+y,yc+x);
+    glVertex2i(xc-y,yc+x);
+    glVertex2i(xc+y,yc-x);
+    glVertex2i(xc-y,yc-x);
+
+ glEnd();
+    x++;
+    if(d>0){
+        y--;
+        d=d+4*(x-y)+10;
+    }else{
+        d=d+4*x+6;
+        }
+}
+
+        glFlush();
+}
+
+void mouse(int button,int state,int x,int y){
+if(button==GLUT_LEFT_BUTTON &&state==GLUT_DOWN){
+    if(!firstClick){
+        centreX=x;
+        centreY=y;
+        firstClick=true;
+    }else{
+        radiusX=x;
+        radius=abs(radiusX-centreX);
+        glClear(GL_COLOR_BUFFER_BIT);
+      drawCircle(centreX, centreY, radius);
+            drawCircle(centreX, centreY, radius*2);
+
+            // Left and Right Circles
+drawCircle(centreX + radius * 2, centreY, radius); // Right
+drawCircle(centreX - radius * 2, centreY, radius); // Left
+
+// Diagonals (Top-Right and Top-Left)
+drawCircle(centreX + radius * sqrt(3/2), centreY - 1.7*radius, radius); // Top-Right
+drawCircle(centreX - radius * sqrt(3/2), centreY - 1.7*radius, radius); // Top-Left
+
+// Diagonals (Bottom-Right and Bottom-Left)
+drawCircle(centreX + radius * sqrt(3/2), centreY + 1.7*radius, radius); // Bottom-Right
+drawCircle(centreX - radius * sqrt(3/2), centreY + 1.7*radius, radius); // Bottom-Le
+
+        firstClick=false;
+        }
+}
+}
+void display(){
+
+    glClear(GL_COLOR_BUFFER_BIT);
+    glFlush();
+}
+void init(){
+glClearColor(0.0,0.0,0.0,1.0);
+glMatrixMode(GL_PROJECTION);
+gluOrtho2D(0,600,600,0);
+}
+
+
+int main(int argc,char**argv){
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+    glutInitWindowSize(600,600);
+    glutCreateWindow("---------");
+    init();
+    glutDisplayFunc(display);
+    glutMouseFunc(mouse);
+    glutMainLoop();
+    return 0;
+    }
+BRESENHAM LINE: 1ST CHIT
+#include <GL/glut.h>
+#include <iostream>
+using namespace std;
+void displayPoint(int x,int y){
+glColor3f(0,0,1);
+glPointSize(2);
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+glEnd();
+}
+float x1,y1,x2,y2;
+int ch;
+void SimpleLine(float x1,float y1,float x2,float y2){
+float dx,dy,p;
+int i;
+float x,y;
+float xinc,yinc,inc1,inc2;
+dx=x2-x1;
+dy=y2-y1;
+if(dx<0){
+    dx=-dx;
+}
+if(dy<0){
+    dy=-dy;
+    }
+    xinc=1;
+    if(x2<x1){
+        xinc=-1;
+    }
+    yinc=1;
+    if(y2<y1){
+        yinc=-1;
+    }
+    x=x1;
+    y=y1;
+    if(dx>dy){
+        displayPoint(x,y);
+    p=2*dy-dx;
+        inc1=2*(dy-dx);
+        inc2=2*dy;
+        for(i=0;i<dx;i++){
+            if(p>=0){
+                x=x+xinc;
+                y=y+yinc;
+                p=p+inc1;
+            }else{
+            x=x+xinc;
+            p=p+inc2;
+            }
+            displayPoint(x,y);
+        }
+    }
+    else{
+        displayPoint(x,y);
+        p=2*dx-dy;
+        inc1=2*(dx-dy);
+        inc2=2*dx;
+        for(int i=0;i<dy;i++){
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+
+        }
+        else{
+            y=y+yinc;
+            p=p+inc2;
+        }
+        displayPoint(x,y);
+
+    }
+    }
+    glFlush();
+}
+void DottedLine(float x1,float y1,float x2,float y2){
+float dx,dy,p;
+float x,y;
+float xinc,yinc,inc1,inc2;
+int i;
+dx=x2-x1;
+dy=y2-y1;
+if(dx<0){
+    dx=-dx;
+}if(dy<0){
+    dy=-dy;
+}xinc=1;
+if(x2<x1){
+   xinc=-1;
+}
+yinc=1;
+if(y2<y1){
+    yinc=-1;
+}
+if(dx>dy){
+    displayPoint(x,y);
+    p=2*dy-dx;
+    inc1=2*(dy-dx);
+    inc2=2*dy;
+    for(int i=0;i<dx;i++){
+            if(i%4==0){
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }else{
+        x=x+xinc;
+        p=p+inc2;
+
+        }
+        displayPoint(x,y);
+            }
+            else{
+                if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }else{
+        x=x+xinc;
+        p=p+inc2;
+
+        }
+            }
+    }
+}
+else{
+        displayPoint(x,y);
+    p=2*dx-dy;
+    inc1=2*(dx-dy);
+    inc2=2*dx;
+    for(int i=0;i<dy;i++){
+            if(i%4==0){
+                if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }else{
+        y=y+yinc;
+        p=p+inc2;
+        }
+        displayPoint(x,y);
+            }
+            else{
+                if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }else{
+        y=y+yinc;
+        p=p+inc2;
+        }
+            }
+
+
+}
+}
+glFlush();
+
+}
+void DashedLine(float x1,float y1,float x2,float y2){
+float dx,dy,p;
+int i;
+float x,y;
+float xinc,yinc,inc1,inc2;
+dx=x2-x1;
+dy=y2-y1;
+int count=0;
+if(dx<0){
+    dx=-dx;
+}
+if(dy<0){
+    dy=-dy;
+    }
+    xinc=1;
+    if(x2<x1){
+        xinc=-1;
+    }
+    yinc=1;
+    if(y2<y1){
+        yinc=-1;
+    }
+    x=x1;
+    y=y1;
+    if(dx>dy){
+        displayPoint(x,y);
+    p=2*dy-dx;
+        inc1=2*(dy-dx);
+        inc2=2*dy;
+        for(i=0;i<dx;i++){
+                count++;
+            if(count<=7){
+            if(p>=0){
+                x=x+xinc;
+                y=y+yinc;
+                p=p+inc1;
+            }else{
+            x=x+xinc;
+            p=p+inc2;
+            }
+            displayPoint(x,y);
+        }
+        else if(count>7 &&count<=10){
+            if(p>=0){
+                x=x+xinc;
+                y=y+yinc;
+                p=p+inc1;
+            }else{
+            x=x+xinc;
+            p=p+inc2;
+            }
+        }
+        else{
+            count=0;
+            if(p>=0){
+                x=x+xinc;
+                y=y+yinc;
+                p=p+inc1;
+            }else{
+            x=x+xinc;
+            p=p+inc2;
+            }
+        }
+        }
+    }
+    else{
+        displayPoint(x,y);
+        p=2*dx-dy;
+        inc1=2*(dx-dy);
+        inc2=2*dx;
+        for(int i=0;i<dy;i++){
+                count++;
+        if(count<=7){
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+
+        }
+        else{
+            y=y+yinc;
+            p=p+inc2;
+        }
+        displayPoint(x,y);
+
+    }
+    else if(count>7 && count<=10){
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+
+        }
+        else{
+            y=y+yinc;
+            p=p+inc2;
+        }
+    }
+    else{
+        count=0;
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+
+        }
+        else{
+            y=y+yinc;
+            p=p+inc2;
+        }
+    }
+        }
+    }
+    glFlush();
+}
+void myMouse(int button,int state,int x,int y){
+static int xst,yst,pt=0;
+if(button==GLUT_LEFT_BUTTON &&state==GLUT_DOWN){
+    if(pt==0){
+        xst=x;
+        yst=y;
+        pt=pt+1;
+    }
+    else{
+        if(ch==1){
+            SimpleLine(xst,yst,x,y);
+        }
+        else if(ch==2){
+            DottedLine(xst,yst,x,y);
+
+        }
+        else if(ch==3){
+            DashedLine(xst,yst,x,y);
+        }
+        xst=x;
+        yst=y;
+    }
+}
+else if(button==GLUT_RIGHT_BUTTON && state==GLUT_DOWN){
+    pt=0;
+
+}
+glFlush();
+}
+void keyboard(unsigned char key,int x,int y){
+switch(key){
+ case 's': ch=1;
+            glutMouseFunc(myMouse);
+            break;
+    case 'd': ch=2;
+            glutMouseFunc(myMouse);
+            break;
+    case 'D': ch=3;
+            glutMouseFunc(myMouse);
+            break;
+            }
+            glutPostRedisplay();
+}
+void initialize(void){
+glClearColor(1.0,1.0,1.0,1.0);
+glClear(GL_COLOR_BUFFER_BIT);
+gluOrtho2D(0,600,600,0);
+}
+void primitives(void){
+glColor3f(1,0,0);
+SimpleLine(0,300,600,300);
+SimpleLine(300,0,300,600);
+glutKeyboardFunc(keyboard);
+
+}
+int main(int argc,char**argv){
+glutInit(&argc,argv);
+glutInitDisplayMode(GLUT_SINGLE);
+glutInitWindowPosition(0,0);
+glutInitWindowSize(600,600);
+glutCreateWindow("--------Line----");
+initialize();
+cout<<"\ns:SimpleLine";
+cout<<"\nd:Dotted Line";
+cout<<"\nD: DashedLine";
+glutDisplayFunc(primitives);
+glutMainLoop();
+return 0;
+}
+HUMAN BODY AND GHAR WITH SIMPLE LINE AND CIRCLE:
+#include <GL/glut.h>
+#include <iostream>
+using namespace std;
+void displayPoint(int x,int y){
+glColor3f(0,0,1);
+glPointSize(2);
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+glEnd();
+}
+float x1,y1,x2,y2;
+int ch;
+void SimpleLine(float x1,float y1,float x2,float y2){
+float dx,dy,p;
+float x,y;
+int i;
+float xinc,yinc,inc1,inc2;
+dx=x2-x1;
+dy=y2-y1;
+if(dx<0){
+    dx=-dx;
+
+}
+if(dy<0){
+    dy=-dy;
+}
+xinc=1;
+if(x2<x1){
+    xinc=-1;
+
+}
+yinc=1;
+if(y2<y1){
+    yinc=-1;
+}
+x=x1;
+y=y1;
+if(dx>dy){
+    displayPoint(x,y);
+    p=2*dy-dx;
+    inc1=2*(dy-dx);
+    inc2=2*dy;
+    for(int i=0;i<dx;i++){
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }
+        else{
+            x=x+xinc;
+            p=p+inc2;
+        }
+        displayPoint(x,y);
+    }
+}
+else{
+    displayPoint(x,y);
+    p=2*dx-dy;
+    inc1=2*(dx-dy);
+    inc2=2*dx;
+    for(int i=0;i<dy;i++){
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }
+        else{
+            y=y+yinc;
+            p=p+inc2;
+        }
+        displayPoint(x,y);
+    }
+}
+glFlush();
+}
+int centreX,centreY,radiusX,radiusY,radius;
+bool firstClick =false;
+void drawCircle(int xc,int yc,int r){
+int x=0,y=r;
+int d=3-(2*r);
+
+while(x<=y){
+     glBegin(GL_POINTS);
+    glVertex2i(xc+x,yc+y);
+    glVertex2i(xc-x,yc+y);
+    glVertex2i(xc+x,yc-y);
+    glVertex2i(xc-x,yc-y);
+    glVertex2i(xc+y,yc+x);
+    glVertex2i(xc-y,yc+x);
+    glVertex2i(xc+y,yc-x);
+    glVertex2i(xc-y,yc-x);
+
+ glEnd();
+    x++;
+    if(d>0){
+        y--;
+        d=d+4*(x-y)+10;
+    }else{
+        d=d+4*x+6;
+        }
+}
+
+        glFlush();
+}
+
+void mouse(int button,int state,int x,int y){
+    static int xst,yst,pt=0;
+if(button==GLUT_LEFT_BUTTON &&state==GLUT_DOWN && ch==1){
+    if(!firstClick){
+        centreX=x;
+        centreY=y;
+        firstClick=true;
+
+    }else{
+        ch=1;
+        radiusX=x;
+        radius=abs(radiusX-centreX);
+        //glClear(GL_COLOR_BUFFER_BIT);
+      drawCircle(centreX, centreY, radius);
+        firstClick=false;
+}
+        }
+}
+
+void myMouse(int button,int state,int x,int y){
+static int xst,yst,pt=0;
+if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN &&ch==2){
+    if(pt==0){
+        xst=x;
+        yst=y;
+        pt=pt+1;
+    }else{
+
+            SimpleLine(xst,yst,x,y);
+        }
+        xst=x;
+        yst=y;
+    }
+else if(button==GLUT_RIGHT_BUTTON &&state==GLUT_DOWN){
+pt=0;
+}
+glFlush();
+}
+void keyboard(unsigned char key,int x,int y){
+switch(key){
+case 'c': ch=1;
+        glutMouseFunc(mouse);
+        break;
+case 'l': ch=2;
+        glutMouseFunc(myMouse);
+        break;
+}
+//glutPostRedisplay();
+}
+void display(){
+    glFlush();
+}
+void init(){
+glClearColor(0.0,0.0,0.0,1.0);
+glMatrixMode(GL_PROJECTION);
+gluOrtho2D(0,600,600,0);
+}
+int main(int argc,char**argv){
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+    glutInitWindowSize(600,600);
+    glutCreateWindow("---------");
+    init();
+    glutDisplayFunc(display);
+    glutKeyboardFunc(keyboard);
+    glutMainLoop();
+    return 0;
+    }
+DIAMOND:
+#include <GL/glut.h>
+#include <iostream>
+using namespace std;
+void displayPoint(int x,int y){
+glColor3f(0,0,1);
+glPointSize(2);
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+glEnd();
+}
+float x1,y1,x2,y2;
+int ch;
+void SimpleLine(float x1,float y1,float x2,float y2){
+float dx,dy,p;
+float x,y;
+int i;
+float xinc,yinc,inc1,inc2;
+dx=x2-x1;
+dy=y2-y1;
+if(dx<0){
+    dx=-dx;
+
+}
+if(dy<0){
+    dy=-dy;
+}
+xinc=1;
+if(x2<x1){
+    xinc=-1;
+
+}
+yinc=1;
+if(y2<y1){
+    yinc=-1;
+}
+x=x1;
+y=y1;
+if(dx>dy){
+    displayPoint(x,y);
+    p=2*dy-dx;
+    inc1=2*(dy-dx);
+    inc2=2*dy;
+    for(int i=0;i<dx;i++){
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }
+        else{
+            x=x+xinc;
+            p=p+inc2;
+        }
+        displayPoint(x,y);
+    }
+}
+else{
+    displayPoint(x,y);
+    p=2*dx-dy;
+    inc1=2*(dx-dy);
+    inc2=2*dx;
+    for(int i=0;i<dy;i++){
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }
+        else{
+            y=y+yinc;
+            p=p+inc2;
+        }
+        displayPoint(x,y);
+    }
+}
+glFlush();
+}
+
+void myMouse(int button,int state,int x,int y){
+static int xst,yst,pt=0;
+if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
+    if(pt==0){
+        xst=x;
+        yst=y;
+        pt=pt+1;
+    }else{
+
+            SimpleLine(xst,yst,xst,y);
+            SimpleLine(xst,y,x,y);
+            SimpleLine(x,y,x,yst);
+            SimpleLine(x,yst,xst,yst);
+
+            int a=(xst+x)/2;
+            int b=(yst+y)/2;
+
+            SimpleLine(a,yst,xst,b);
+            SimpleLine(xst,b,a,y);
+            SimpleLine(a,y,x,b);
+            SimpleLine(x,b,a,yst);
+
+            SimpleLine((a+xst)/2,(b+yst)/2,(xst+a)/2,(y+b)/2);
+            SimpleLine((xst+a)/2,(y+b)/2,(x+a)/2,(y+b)/2);
+            SimpleLine((x+a)/2,(y+b)/2,(x+a)/2,(yst+b)/2);
+            SimpleLine((x+a)/2,(yst+b)/2,(xst+a)/2,(yst+b)/2);
+
+        }
+        xst=x;
+        yst=y;
+    }
+else if(button==GLUT_RIGHT_BUTTON &&state==GLUT_DOWN){
+pt=0;
+}
+glFlush();
+}
+
+void display(){
+    glClear(GL_COLOR_BUFFER_BIT);
+    glFlush();
+}
+void init(){
+glClearColor(0.0,0.0,0.0,1.0);
+glMatrixMode(GL_PROJECTION);
+gluOrtho2D(0,600,600,0);
+}
+int main(int argc,char**argv){
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+    glutInitWindowSize(600,600);
+    glutCreateWindow("---------");
+    init();
+    glutDisplayFunc(display);
+    glutMouseFunc(myMouse);
+    glutMainLoop();
+    return 0;
+    }
+GHAR DOTTED :
+#include <GL/glut.h>
+#include <iostream>
+using namespace std;
+void displayPoint(int x,int y){
+glColor3f(0,0,1);
+glPointSize(2);
+glBegin(GL_POINTS);
+glVertex2i(x,y);
+glEnd();
+}
+float x1,y1,x2,y2;
+int ch;
+void SimpleLine(float x1,float y1,float x2,float y2){
+float dx,dy,p;
+float x,y;
+int i;
+float xinc,yinc,inc1,inc2;
+dx=x2-x1;
+dy=y2-y1;
+if(dx<0){
+    dx=-dx;
+
+}
+if(dy<0){
+    dy=-dy;
+}
+xinc=1;
+if(x2<x1){
+    xinc=-1;
+
+}
+yinc=1;
+if(y2<y1){
+    yinc=-1;
+}
+x=x1;
+y=y1;
+if(dx>dy){
+    displayPoint(x,y);
+    p=2*dy-dx;
+    inc1=2*(dy-dx);
+    inc2=2*dy;
+    for(int i=0;i<dx;i++){
+            if(i%4==0){
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }
+        else{
+            x=x+xinc;
+            p=p+inc2;
+        }
+        displayPoint(x,y);
+    }
+    else{
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }
+        else{
+            x=x+xinc;
+            p=p+inc2;
+        }
+    }
+    }
+}
+else{
+    displayPoint(x,y);
+    p=2*dx-dy;
+    inc1=2*(dx-dy);
+    inc2=2*dx;
+    for(int i=0;i<dy;i++){
+            if(i%4==0){
+        if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }
+        else{
+            y=y+yinc;
+            p=p+inc2;
+        }
+        displayPoint(x,y);
+            }
+            else{
+                if(p>=0){
+            x=x+xinc;
+            y=y+yinc;
+            p=p+inc1;
+        }
+        else{
+            y=y+yinc;
+            p=p+inc2;
+        }
+            }
+    }
+}
+glFlush();
+}
+
+void myMouse(int button,int state,int x,int y){
+static int xst,yst,pt=0;
+if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
+    if(pt==0){
+        xst=x;
+        yst=y;
+        pt=pt+1;
+    }else{
+
+            SimpleLine(xst,yst,x,y);
+
+        }
+        xst=x;
+        yst=y;
+    }
+else if(button==GLUT_RIGHT_BUTTON &&state==GLUT_DOWN){
+pt=0;
+}
+glFlush();
+}
+
+void display(){
+    glFlush();
+}
+void init(){
+glClearColor(0.0,0.0,0.0,1.0);
+glMatrixMode(GL_PROJECTION);
+gluOrtho2D(0,600,600,0);
+}
+int main(int argc,char**argv){
+    glutInit(&argc,argv);
+    glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);
+    glutInitWindowSize(600,600);
+    glutCreateWindow("---------");
+    init();
+    glutDisplayFunc(display);
+    glutMouseFunc(myMouse);
+    glutMainLoop();
+    return 0;
+    }
+2D TRANSFORMATION:
+#include <GL/glut.h>
+#include <cmath>
+#include <iostream>
+using namespace std;
+
+struct Point {
+    int xc;
+    int yc;
+} p[10];
+int i = 0;
+int n;
+
+bool flag = true;
+int tx, ty, sx, sy;
+int angle;
+int px, py;
+void displayPoint(int x, int y)
+{
+   glColor3f(0, 0, 1);
+   glPointSize(2);
+   glBegin(GL_POINTS);
+   glVertex2i(x, y);
+   glEnd();
+}
+
+
+void SimpleLine(float x1, float y1, float x2, float  y2)
+{
+   float step;
+
+   float dx = x2 - x1;
+   float dy = y2 - y1;
+
+   if (abs(dx) > abs(dy))
+   {
+      step = abs(dx);
+   }
+   else
+      step = abs(dy);
+
+   float Xinc = dx / step;
+   float Yinc = dy / step;
+   float x = x1;
+   float y = y1;
+
+   for (int i = 0; i <= step; i++)
+   {
+      displayPoint(x, y);
+      x = x + Xinc;
+      y = y + Yinc;
+   }
+   glFlush();
+}
+
+
+void drawPolygon(struct Point p[], int n) {
+    glPointSize(1.0);
+int j;
+    for ( j = 0; j < n-1; j++) {
+       SimpleLine(p[j].xc,p[j].yc,p[j+1].xc,p[j+1].yc);
+    }
+    SimpleLine(p[j].xc,p[j].yc,p[0].xc,p[0].yc);
+    glEnd();
+    glFlush();
+}
+
+void myDisplay() {
+    glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(0.0f, 0.0f, 0.0f);
+    glBegin(GL_LINES);
+    glVertex2i(300, 0);
+    glVertex2i(300, 600);
+    glVertex2i(0, 300);
+    glVertex2i(600, 300);
+    glEnd();
+
+}
+
+void translate(int tx, int ty) {
+    myDisplay();
+    drawPolygon(p, n);
+    struct Point pt[10];
+
+    for (int j = 0; j < n; j++) {
+        pt[j].xc = p[j].xc + tx;
+        pt[j].yc = p[j].yc + ty;
+    }
+
+    drawPolygon(pt, n);
+    glFlush();
+}
+
+void scaling(int sx, int sy) {
+    myDisplay();
+    drawPolygon(p, n);
+    struct Point pt[10];
+
+    for (int j = 0; j < n; j++) {
+        pt[j].xc = p[j].xc * sx;
+        pt[j].yc = p[j].yc * sy;
+    }
+
+    drawPolygon(pt, n);
+    glFlush();
+}
+
+void rotation1(int angle) {
+    float ang = angle * 3.14 / 180.0;
+    myDisplay();
+    drawPolygon(p, n);
+    Point pt[10];
+
+    for (int j = 0; j < n; j++) {
+        pt[j].xc = p[j].xc * cos(ang) - p[j].yc * sin(ang);
+        pt[j].yc = p[j].xc * sin(ang) + p[j].yc * cos(ang);
+    }
+
+    drawPolygon(pt, n);
+    glFlush();
+}
+
+
+   
+void refx()
+{
+	 myDisplay();
+    	drawPolygon(p, n);
+    	struct Point pt[10];
+    for (int j = 0; j < n; j++) {
+        pt[j].xc = p[j].xc;
+        pt[j].yc = 300-(p[j].yc-300);
+    }
+
+    drawPolygon(pt, n);
+    glFlush();
+}
+void refy()
+{
+	 myDisplay();
+    	drawPolygon(p, n);
+    	struct Point pt[10];
+    for (int j = 0; j < n; j++) {
+        pt[j].xc = 300-(p[j].xc-300);
+        pt[j].yc = p[j].yc;
+    }
+
+    drawPolygon(pt, n);
+    glFlush();
+}
+void refxy()
+{
+ myDisplay();
+    	drawPolygon(p, n);
+    	struct Point pt[10];
+    for (int j = 0; j < n; j++) {
+        pt[j].xc = 300-(p[j].xc-300);
+         pt[j].yc = 300-(p[j].yc-300);
+    }
+
+    drawPolygon(pt, n);
+    glFlush();
+}
+void menu(int choice) {
+    switch (choice) {
+    case 1: // Translate
+        cout << "\n enter tx and ty: ";
+        cin >> tx >> ty;
+        translate(tx, ty);
+        break;
+    case 2: // Scaling
+        cout << "\n enter sx and sy: ";
+        cin >> sx >> sy;
+        scaling(sx, sy);
+        break;
+    case 3: // Rotation about origin
+        cout << "\n enter angle: ";
+        cin >> angle;
+        rotation1(angle);
+        break;
+    case 4: // Rotation about point
+        cout << "\n enter angle: ";
+        cin >> angle;
+        cout << "\n enter px and py: ";
+        cin >> px >> py;
+        rotation2(angle, px, py);
+        break;
+       case 5:// Reflection about x axis
+       refx();
+       break;
+      case 6:
+      //Reflection about y axis
+      refy();
+      break;
+    case 7: // Reflection about xy
+        refxy();
+        break;
+      case 8:
+      exit(0);
+    }
+    glutPostRedisplay();
+}
+
+void myMouse(int button, int state, int x, int y) {
+    if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+        if (flag == true) {
+            p[i].xc = x;
+            p[i].yc = 600 - y;
+            i++;
+        }
+    } else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
+        n = i;
+        drawPolygon(p, n);
+        flag = false;
+        glutCreateMenu(menu);
+        glutAddMenuEntry("1. Translate", 1);
+        glutAddMenuEntry("2. Scaling", 2);
+        glutAddMenuEntry("3. Rotation about origin", 3);
+        glutAddMenuEntry("4. Reflection at x axis", 4);
+        glutAddMenuEntry("5. Reflection at yaxis", 5);
+        glutAddMenuEntry("6. Exit", 6);
+        glutAttachMenu(GLUT_RIGHT_BUTTON);
+    }
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitWindowPosition(0, 0);
+    glutInitWindowSize(600, 600);
+    glutCreateWindow("My Drawing Screen");
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0, 600, 0, 600);
+    glutDisplayFunc(myDisplay);
+    glutMouseFunc(myMouse);
+    glutMainLoop();
+    return (0);
+}
+POLYGON FILLING:
+
+#include <GL/glut.h>
+#include <iostream>
+
+using namespace std;
+int ch;
+float IntColor[3]={1.0,1.0,1.0};
+float fillColorf[3]={1.0,0.0,0.0};
+float fillColorb[3]={0.0,0.0,1.0};
+float borderColor[3]={1.0,0.0,0.0};
+void setPixel(int pointx,int pointy,float f[3]){
+glBegin(GL_POINTS);
+glColor3fv(f);
+glVertex2i(pointx,pointy);
+glEnd();
+glFlush();
+}
+void drawPolygon(int x1,int y1,int x2,int y2){
+glBegin(GL_LINE_LOOP);
+glVertex2i(x1,y1);
+glVertex2i(x1,y2);
+glVertex2i(x2,y2);
+glVertex2i(x2,y1);
+glEnd();
+glFlush();
+}
+void display(){
+//glClear(GL_COLOR_BUFFER_BIT);
+glFlush();
+}
+void floodfill4(int x,int y,float oldColor[3],float newColor[3]){
+float color[3];
+glReadPixels(x,y,1.0,1.0,GL_RGB,GL_FLOAT,color);
+if(color[0]==oldColor[0] && color[1]==oldColor[1] &&color[2]==oldColor[2]){
+    setPixel(x,y,newColor);
+    floodfill4(x+1,y,oldColor,newColor);
+        floodfill4(x-1,y,oldColor,newColor);
+        floodfill4(x,y+1,oldColor,newColor);
+            floodfill4(x,y-1,oldColor,newColor);
+}
+ }
+ void boundaryfill4(int x,int y,float fillColor[3],float borderColor[3]){
+ float interiorColor[3];
+ glReadPixels(x,y,1.0,1.0,GL_RGB,GL_FLOAT,interiorColor);
+ if((interiorColor[0]!=borderColor[0] ||interiorColor[1]!=borderColor[1]||interiorColor[2]!=borderColor[2])&&(interiorColor[0]!=fillColor[0] ||interiorColor[1]!=fillColor[1]||interiorColor[2]!=fillColor[2]))
+{
+    setPixel(x,y,fillColor);
+    boundaryfill4(x+1,y,fillColor,borderColor);
+        boundaryfill4(x-1,y,fillColor,borderColor);
+        boundaryfill4(x,y+1,fillColor,borderColor);
+            boundaryfill4(x,y-1,fillColor,borderColor);
+
+}
+ }
+ void mouse(int button,int state,int x,int y){
+ if(button==GLUT_LEFT_BUTTON && state==GLUT_DOWN){
+    int xi=x;
+    int yi=600-y;
+    if(ch==1){
+        floodfill4(xi,yi,IntColor,fillColorf);
+
+    }
+    if(ch==2){
+        boundaryfill4(xi,yi,fillColorb,borderColor);
+    }
+
+ glFlush();
+ }
+ }
+ void keyboard(unsigned char key,int x,int y){
+
+ switch(key){
+ case 'f':
+     ch=1;
+     glClearColor(1.0,1.0,1.0,1.0);
+      glClear(GL_COLOR_BUFFER_BIT);
+ glColor3f(0.0,0.0,0.0);
+       drawPolygon(150,250,300,440);
+     glutMouseFunc(mouse);
+     break;
+ case 'b':
+    ch=2;
+    glClearColor(1.0,1.0,1.0,1.0);
+      glClear(GL_COLOR_BUFFER_BIT);
+ glColor3f(1.0,0.0,0.0);
+   glBegin (GL_LINE_LOOP);
+glVertex2i (200,200);
+glVertex2i (400,200);
+glVertex2i (300,400);
+glVertex2i (250,300);
+glVertex2i (220,400);
+glEnd();
+
+    glutMouseFunc(mouse);
+    break;
+    }
+
+glFlush();
+ }
+ void init(){
+ glClearColor(1.0,1.0,1.0,1.0);
+ glClear(GL_COLOR_BUFFER_BIT);
+ gluOrtho2D(0,600,0,600);
+
+ }
+ int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(600, 600);
+    glutCreateWindow("Flood-Fill-Recursive and Boundary-Fill-Recursive");
+    init();
+    glutDisplayFunc(display);
+    glutKeyboardFunc(keyboard);
+
+    cout << "\n f: flood fill algorithm";
+    cout << "\n b: boundary fill algorithm";
+
+    glutMainLoop();
+    return 0;
+}
